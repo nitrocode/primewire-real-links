@@ -3,8 +3,8 @@
 // @namespace      nitrocode
 // @description    If link text is missing, it will fill it so you can see which CDNs to click on. This will also strip out Promo / Sponsor hosts.
 // @version        0.1
-// @match          *://*.primewire.ag/tv-*
-// @match          *://*.primewire.ag/watch-*
+// @include        *://*.primewire.ag/tv-*
+// @include        *://*.primewire.ag/watch-*
 // @grant          none
 // ==/UserScript==
 
@@ -12,23 +12,31 @@
 // Only run script after the page has fully loaded
 window.addEventListener('load', function() {
     // grab all version_host class vars that hold the rocker script
-    var links = document.querySelectorAll('.version_host');
-    var link_text = "";
+    var tables = document.querySelectorAll('.movie_version');
+    var real_url, real_url_de, domain_text, domain_text_el;
     var real_link_count = 0;
-    for (var i=0; i<links.length; i++) {
-        // cut up the string instead of eval'ing so it's safe
-        link_text = links[i].innerHTML.substring(
-            links[i].innerHTML.indexOf("'") + 1,
-            links[i].innerHTML.lastIndexOf("'")
+    for (var i=0; i<tables.length; i++) {
+        // extract domain text from js
+        domain_text_el = tables[i].querySelector('.version_host');
+        domain_text = domain_text_el.innerHTML.substring(
+            domain_text_el.innerHTML.indexOf("'") + 1,
+            domain_text_el.innerHTML.lastIndexOf("'")
         );
-        // Remove Promo Host and Sponsor Host
-        if (!link_text.includes('Host')) {
-            links[i].innerHTML = link_text;
-            console.log('Found real link: ' + link_text);
+        // if the text does not contain Host like Promo Host or Sponsor Host
+        if (!domain_text.includes('Host')) {
+            // set domain text without javascript
+            domain_text_el.innerHTML = domain_text;
+            // base64 decrypt the real url
+            real_url = tables[i].querySelector('a');
+            real_url_de = atob(real_url.href.split('&')[1].split('=')[1]);
+            real_url.href = real_url_de;
+            //given_url.innerHTML = real_url;
+            console.log('#' + i + ' Found real link: ' + real_url_de);
             real_link_count++;
+        // remove it if it does
         } else {
-            links[i].closest('table').remove();
-            console.log('Removed: ' + link_text);
+            tables[i].remove();
+            console.log('#' + i + ' Removed: ' + domain_text);
         }
     }
     console.log('Found ' + real_link_count + ' real links');
