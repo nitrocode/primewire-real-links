@@ -3,9 +3,9 @@
 // @namespace      nitrocode
 // @description    For PrimeWire, LetMeWatchThis, and OneChannel. If link text is missing, it will fill it so you can see which CDNs to click on. This will also strip out Promo / Sponsor hosts.
 // @version        0.2
-// @include        ^https?:\/\/primewire\.ag\/tv-.*
-// @include        ^https?:\/\/primewire\.is\/tv-.*
-// @include        ^https?:\/\/primewire\.org\/tv-.*
+// @include        /^https?:\/\/(www\.)?primewire\.ag\/.*$/
+// @include        /^https?:\/\/(www\.)?primewire\.is\/.*$/
+// @include        /^https?:\/\/(www\.)?primewire\.org\/-.*$/
 // @grant          none
 // ==/UserScript==
 
