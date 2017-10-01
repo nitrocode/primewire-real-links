@@ -1,9 +1,11 @@
 // ==UserScript==
-// @name           PrimewireLinks
+// @name           Primewire Real Links
 // @namespace      nitrocode
-// @description    If link text is missing, it will fill it so you can see which CDNs to click on. This will also strip out Promo / Sponsor hosts.
+// @description    For PrimeWire, LetMeWatchThis, and OneChannel. If link text is missing, it will fill it so you can see which CDNs to click on. This will also strip out Promo / Sponsor hosts.
 // @version        0.2
-// @include        *://*.primewire.ag/tv-*
+// @include        ^https?:\/\/primewire\.ag\/tv-.*
+// @include        ^https?:\/\/primewire\.is\/tv-.*
+// @include        ^https?:\/\/primewire\.org\/tv-.*
 // @grant          none
 // ==/UserScript==
 
